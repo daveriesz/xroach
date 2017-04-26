@@ -1,0 +1,13 @@
+README.solaris 
+
+    Solaris Port
+
+    See the top-level Makefile for details on how to build and install this.
+    If you use CDE, you may need to set the screen background
+    to "blank" or "none."
+
+    You can always set the background color with xsetroot (e.g.,
+    "xsetroot -solid SteelBlue" in .xinitrc or .Xclients).
+
+     - Dan Anderson <anderson@computer.org>
+       San Diego, California, US

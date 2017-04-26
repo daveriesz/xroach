@@ -1,0 +1,47 @@
+# Makefile
+PKGDIR	= /opt/xroach
+PROG	= xroach
+VERSION	= 4
+MAN1	= xroach.1
+CFLAGS	= -I/usr/openwin/include
+LDFLAGS	= -L/usr/openwin/lib
+LIBS	= -lm -lX11
+SRCS	= xroach.c
+OBJS	= xroach.o
+SHELL	= /bin/sh
+CC	= cc
+
+all:	${PROG}
+
+${PROG}: ${OBJS} patchlevel.h
+	${CC} -o $@ ${CFLAGS} ${OBJS} ${LDFLAGS} ${LIBS}
+	strip ${PROG}
+
+clean:
+	rm -f xroach ${OBJS} core
+
+install: $(PROG)
+	-mkdir -p ${PKGDIR}/bin ${PKGDIR}/man/man1
+	chown bin:bin ${PKGDIR}/bin ${PKGDIR}/man \
+		${PKGDIR}/man/man1
+	/usr/ucb/install -c -o bin -g bin -m 0755 $(PROG) \
+		${PKGDIR}/bin/$(PROG)
+	/usr/ucb/install -c -o bin -g bin -m 0644 $(MAN1) \
+		${PKGDIR}/man/man1/$(MAN1)
+	/usr/ucb/install -c -o bin -g bin -m 0644 README.solaris
+		 ${PKGDIR}
+
+
+package:
+	cp pkginfo ${PKGDIR}
+	echo 'i pkginfo=./pkginfo' >${PKGDIR}/prototype
+	cd ${PKGDIR}; find . \! -name pkginfo | grep -v prototype \
+		| pkgproto | sed 's/root/bin/g' >>prototype
+	cd ${PKGDIR}; pkgmk -o -r `pwd` -a `uname -m` -v ${VERSION}
+	cd /var/spool/pkg; pkgtrans -s `pwd` ${TMP}/${PROG}-${VERSION}-`uname -m`-solaris`uname -r`
+	mv ${TMP}/${PROG}-${VERSION}-`uname -m`-solaris`uname -r` .
+	gzip -f -9 ${PROG}-${VERSION}-`uname -m`-solaris`uname -r`
+	rm -f ${PKGDIR}/prototype ${PKGDIR}/pkginfo
+	rm -rf /var/spool/pkg/${PROG}
+	ls -l ${PROG}-${VERSION}-`uname -m`-solaris`uname -r`.gz
+

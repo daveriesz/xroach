@@ -1,0 +1,15 @@
+Begin3
+Title:          xroach
+Version:        4.0
+Entered-date:   Thu Jan 28 16:57:20 PST 1999
+Description:    Displays disgusting cockroaches on your root X window
+		They scurry about when windows are minimized or moved.
+Keywords:       X cockroaches
+Author:         jta@locus.com (J.T. Anderson)
+Maintained-by:  danx@cts.com (Dan Anderson)
+Primary-site:   metalab.unc.edu /pub/Linux/X11/demos
+Alternate-site: 
+Original-site:  
+Platforms:      Linux.
+Copying-policy: Distributable
+End
